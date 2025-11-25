@@ -1,0 +1,61 @@
+{
+  "Backend Developer": {
+    "duration_weeks": 8,
+    "weeks": [
+      "Week 1-2: Advanced Python/Java & OOP Concepts",
+      "Week 3: Database Design & Advanced SQL",
+      "Week 4-5: Building RESTful APIs with Flask/Django",
+      "Week 6: Authentication (JWT/OAuth) & Security",
+      "Week 7: Caching (Redis) & Task Queues (Celery)",
+      "Week 8: Deployment (Docker & AWS EC2)"
+    ],
+    "projects": ["E-commerce API", "Blog Engine with Auth"],
+    "resources": ["Flask Mega-Tutorial", "RealPython", "System Design Primer"]
+  },
+  "Data Scientist": {
+    "duration_weeks": 10,
+    "weeks": [
+      "Week 1-2: Learn Python basics + statistics",
+      "Week 3-4: Numpy, Pandas, data cleaning",
+      "Week 5-6: Visualization with Matplotlib/Seaborn",
+      "Week 7-8: ML algorithms (sklearn)",
+      "Week 9-10: End-to-end ML projects"
+    ],
+    "projects": [
+      "House Price Prediction",
+      "Customer Churn Analysis"
+    ]
+  },
+  "Frontend Developer": {
+  "duration_weeks": 8,
+  "weeks": [
+    "Week 1-2: HTML, CSS basics + layouting (Flexbox, Grid)",
+    "Week 3-4: Core JavaScript (DOM, events, fetch API)",
+    "Week 5-6: React basics (components, props, state, hooks)",
+    "Week 7-8: Build 2-3 responsive projects + deploy on Netlify/Vercel"
+  ],
+  "projects": [
+    "Personal Portfolio Website",
+    "Weather App using public API",
+    "Todo App with local storage"
+  ]
+},
+"Machine Learning Engineer": {
+  "duration_weeks": 12,
+  "weeks": [
+    "Week 1-2: Python refresher + Numpy, Pandas",
+    "Week 3-4: Statistics + ML basics (regression, classification, metrics)",
+    "Week 5-6: Model training with scikit-learn on real datasets",
+    "Week 7-8: Intro to TensorFlow/PyTorch + basic neural nets",
+    "Week 9-10: Model deployment basics (FastAPI/Flask + Docker optional)",
+    "Week 11-12: End-to-end ML project: data → model → API → small UI"
+  ],
+  "projects": [
+    "Loan Default Prediction",
+    "Image Classifier (e.g. cats vs dogs)",
+    "ML model served via REST API"
+  ]
+}
+
+}
+

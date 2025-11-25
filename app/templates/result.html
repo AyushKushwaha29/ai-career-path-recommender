@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4 text-center">
+    <h1>Hello, {{ user_name }}!</h1>
+    <p class="lead">Here are your top recommended roles based on our AI analysis.</p>
+</div>
+
+<div class="row">
+    {% for res in results %}
+    {% set result_index = loop.index %}
+    <div class="col-md-12 mb-5">
+        <div class="card shadow">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h3 class="mb-0 text-primary">{{ res.role }}</h3>
+                <span class="badge bg-success fs-5">{{ res.probability }}% Match Probability</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Left: Skill Gap + Chart -->
+                    <div class="col-md-6">
+                        <h5>Skill Gap Analysis</h5>
+                        <p><strong>Skill Match Score:</strong> {{ res.match_score }}%</p>
+
+                        <div class="mb-3">
+                            <strong>You Have:</strong><br>
+                            {% if res.matched_skills %}
+                                {% for s in res.matched_skills %}
+                                    <span class="badge bg-success skill-badge">{{ s }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-muted">No direct matches found.</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>You Need (Missing):</strong><br>
+                            {% if res.missing_skills %}
+                                {% for s in res.missing_skills %}
+                                    <span class="badge bg-danger skill-badge">{{ s }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-success">You have all required skills!</span>
+                            {% endif %}
+                        </div>
+
+                        <div style="max-width: 300px;">
+                            <canvas id="chart-{{ result_index }}"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Right: Roadmap -->
+                    <div class="col-md-6 border-start">
+                        <h5>Recommended Roadmap</h5>
+                        {% if res.roadmap %}
+                            <p class="text-muted">Estimated Time: {{ res.roadmap.duration_weeks }} Weeks</p>
+
+                            {% set accordion_id = 'accordion-' ~ result_index %}
+                            <div class="accordion" id="{{ accordion_id }}">
+                                {% for week in res.roadmap.weeks %}
+                                {% set week_index = loop.index %}
+                                {% set collapse_id = 'collapse-' ~ result_index ~ '-' ~ week_index %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#{{ collapse_id }}">
+                                            {{ week.split(':')[0] }}
+                                        </button>
+                                    </h2>
+                                    <div id="{{ collapse_id }}"
+                                         class="accordion-collapse collapse"
+                                         data-bs-parent="#{{ accordion_id }}">
+                                        <div class="accordion-body">
+                                            {{ week.split(':')[1] if ':' in week else week }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="mt-3">
+                                <strong>Projects to Build:</strong>
+                                <ul>
+                                {% for p in res.roadmap.projects %}
+                                    <li>{{ p }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        {% else %}
+                            <p class="text-warning">No roadmap available for this specific role yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    // Generate Charts for each result
+    {% for res in results %}
+    (function() {
+        const ctx = document.getElementById('chart-{{ loop.index }}');
+        if (!ctx) return;
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Matched Skills', 'Missing Skills'],
+                datasets: [{
+                    data: [{{ res.matched_skills|length }}, {{ res.missing_skills|length }}],
+                    backgroundColor: ['#198754', '#dc3545']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    title: { display: true, text: 'Skill Coverage' }
+                }
+            }
+        });
+    })();
+    {% endfor %}
+</script>
+{% endblock %}

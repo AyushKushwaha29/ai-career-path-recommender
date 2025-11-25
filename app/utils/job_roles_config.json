@@ -1,0 +1,22 @@
+{
+  "Backend Developer": {
+    "required_skills": ["Python", "SQL", "Flask", "Django", "REST API", "Git"],
+    "optional_skills": ["Docker", "AWS", "Redis", "Celery"]
+  },
+  "Frontend Developer": {
+    "required_skills": ["HTML", "CSS", "JavaScript", "React", "Redux", "Git"],
+    "optional_skills": ["TypeScript", "Tailwind", "Next.js"]
+  },
+  "Data Scientist": {
+    "required_skills": ["Python", "Pandas", "NumPy", "Scikit-learn", "SQL", "Statistics"],
+    "optional_skills": ["TensorFlow", "PyTorch", "Big Data", "Tableau"]
+  },
+  "Machine Learning Engineer": {
+    "required_skills": ["Python", "TensorFlow", "PyTorch", "Model Deployment", "FastAPI"],
+    "optional_skills": ["Kubernetes", "MLOps", "Computer Vision"]
+  },
+  "DevOps Engineer": {
+    "required_skills": ["Linux", "Docker", "Kubernetes", "Jenkins", "AWS/Azure", "CI/CD"],
+    "optional_skills": ["Terraform", "Ansible", "Bash Scripting"]
+  }
+}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">Find Your Tech Career Path</h2>
+            
+            <div class="mb-4 p-3 bg-light rounded border">
+                <label class="form-label fw-bold">Optionally Upload Resume (PDF) to Auto-fill</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="resumeFile" accept=".pdf">
+                    <button class="btn btn-secondary" type="button" id="btn-upload-resume">Auto-fill Skills</button>
+                </div>
+                <small class="text-muted" id="uploadStatus"></small>
+            </div>
+
+            <form action="/result" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Branch</label>
+                        <select name="branch" class="form-select">
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Civil">Civil</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Preferred Job Type</label>
+                        <select name="preferred_job_type" class="form-select">
+                            <option value="Remote">Remote</option>
+                            <option value="Office">Office</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Technical Skills (Comma separated)</label>
+                    <input type="text" name="skills" id="skillsInput" class="form-control" placeholder="e.g. Python, SQL, React" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Interests (Comma separated)</label>
+                    <input type="text" name="interests" class="form-control" placeholder="e.g. Web Dev, AI, Cloud" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 btn-lg">Get Career Recommendations</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
