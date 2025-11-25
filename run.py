@@ -1,12 +1,10 @@
-from app import create_app
+from app import app
 from datetime import datetime
 
 app = create_app()
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-   
+if __name__ == "__main__":
+    app.run()
 
 @app.context_processor
 def inject_year():
