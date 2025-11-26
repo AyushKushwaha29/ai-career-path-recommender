@@ -52,3 +52,44 @@ async function uploadResume() {
         status.className = "text-danger mt-2 d-block";
     }
 }
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- DARK MODE LOGIC START ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+    const icon = themeToggleBtn.querySelector('span'); // We will use an emoji span
+
+    // 1. Check LocalStorage on load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        htmlElement.setAttribute('data-bs-theme', 'dark');
+        icon.innerText = '☀️'; // Show Sun icon because mode is dark
+    } else {
+        htmlElement.setAttribute('data-bs-theme', 'light');
+        icon.innerText = '🌙'; // Show Moon icon
+    }
+
+    // 2. Toggle on click
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-bs-theme');
+        
+        if (currentTheme === 'dark') {
+            htmlElement.setAttribute('data-bs-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            icon.innerText = '🌙';
+        } else {
+            htmlElement.setAttribute('data-bs-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            icon.innerText = '☀️';
+        }
+    });
+    // --- DARK MODE LOGIC END ---
+
+    // ... existing Resume Upload logic ...
+    const uploadBtn = document.getElementById('btn-upload-resume');
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', uploadResume);
+    }
+});
+
+// ... existing functions ...

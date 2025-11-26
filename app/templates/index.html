@@ -1,39 +1,62 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow p-4">
-            <h2 class="text-center mb-4">Find Your Tech Career Path</h2>
+<div class="row align-items-center min-vh-75 py-5">
+    
+    <div class="col-lg-6 mb-5 mb-lg-0 text-white">
+        <h1 class="display-3 fw-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+            Unlock Your <br>
+            <span style="color: #00f2fe;">Tech Potential</span>
+        </h1>
+        <p class="lead mb-4" style="font-weight: 300; opacity: 0.9;">
+            Confused about your career? Let our AI analyze your skills and interests to generate a personalized roadmap just for you.
+        </p>
+        
+        <div class="d-flex gap-3">
+            <div class="glass-card px-3 py-2 d-flex align-items-center">
+                <span class="fs-4 me-2">🚀</span> AI Powered
+            </div>
+            <div class="glass-card px-3 py-2 d-flex align-items-center">
+                <span class="fs-4 me-2">📄</span> Resume Parser
+            </div>
+            <div class="glass-card px-3 py-2 d-flex align-items-center">
+                <span class="fs-4 me-2">📈</span> Skill Gap Check
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5 offset-lg-1">
+        <div class="glass-card p-4 p-md-5">
+            <h3 class="fw-bold mb-4 text-center">Start Your Journey</h3>
             
-            <div class="mb-4 p-3 bg-light rounded border">
-                <label class="form-label fw-bold">Optionally Upload Resume (PDF) to Auto-fill</label>
+            <div class="mb-4 p-3 rounded" style="background: rgba(0,0,0,0.05); border: 1px dashed rgba(0,0,0,0.2);">
+                <label class="form-label small fw-bold text-uppercase">Auto-fill with Resume</label>
                 <div class="input-group">
-                    <input type="file" class="form-control" id="resumeFile" accept=".pdf">
-                    <button class="btn btn-secondary" type="button" id="btn-upload-resume">Auto-fill Skills</button>
+                    <input type="file" class="form-control form-control-sm" id="resumeFile" accept=".pdf">
+                    <button class="btn btn-dark btn-sm" type="button" id="btn-upload-resume">Upload</button>
                 </div>
-                <small class="text-muted" id="uploadStatus"></small>
+                <div id="uploadStatus" class="small mt-1"></div>
             </div>
 
             <form action="/result" method="POST">
                 <div class="mb-3">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" name="name" class="form-control" required>
+                    <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Branch</label>
+                
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
                         <select name="branch" class="form-select">
+                            <option value="" disabled selected>Branch</option>
                             <option value="CSE">CSE</option>
                             <option value="IT">IT</option>
                             <option value="ECE">ECE</option>
-                            <option value="Mechanical">Mechanical</option>
+                            <option value="Mech">Mechanical</option>
                             <option value="Civil">Civil</option>
                         </select>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Preferred Job Type</label>
+                    <div class="col-6">
                         <select name="preferred_job_type" class="form-select">
+                            <option value="" disabled selected>Pref. Mode</option>
                             <option value="Remote">Remote</option>
                             <option value="Office">Office</option>
                             <option value="Hybrid">Hybrid</option>
@@ -42,19 +65,18 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Technical Skills (Comma separated)</label>
-                    <input type="text" name="skills" id="skillsInput" class="form-control" placeholder="e.g. Python, SQL, React" required>
+                    <input type="text" name="skills" id="skillsInput" class="form-control" placeholder="Skills (Python, SQL...)" required>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Interests (Comma separated)</label>
-                    <input type="text" name="interests" class="form-control" placeholder="e.g. Web Dev, AI, Cloud" required>
+                <div class="mb-4">
+                    <input type="text" name="interests" class="form-control" placeholder="Interests (AI, Web...)" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100 btn-lg">Get Career Recommendations</button>
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">
+                    Generate Roadmap ✨
+                </button>
             </form>
         </div>
     </div>
 </div>
-
 {% endblock %}

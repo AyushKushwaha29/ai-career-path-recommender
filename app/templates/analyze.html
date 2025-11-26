@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">AI Resume ATS Analyzer</h2>
+            <p class="text-center text-muted">Paste a Job Description and upload your Resume to check your ATS Score.</p>
+            
+            <form action="/analyze-result" method="POST" enctype="multipart/form-data">
+                
+                <div class="mb-4">
+                    <label class="form-label fw-bold">1. Paste Job Description (JD)</label>
+                    <textarea name="jd_text" class="form-control" rows="6" placeholder="Paste the full job description here..." required></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">2. Upload Your Resume (PDF)</label>
+                    <input type="file" name="resume" class="form-control" accept=".pdf" required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 btn-lg">Analyze My Resume</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

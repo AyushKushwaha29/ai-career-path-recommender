@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="text-center mb-4">Analysis Report</h2>
+        
+        <div class="card shadow mb-4">
+            <div class="card-body text-center">
+                <h4>ATS Match Score</h4>
+                
+                <div class="progress" style="height: 30px; margin: 20px 0;">
+                    <div class="progress-bar 
+                        {% if result.match_percentage > 70 %}bg-success
+                        {% elif result.match_percentage > 40 %}bg-warning
+                        {% else %}bg-danger{% endif %}" 
+                        role="progressbar" 
+                        style="width: {{ result.match_percentage }} %;" 
+                        aria-valuenow="{{ result.match_percentage }}" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                        {{ result.match_percentage }}%
+                    </div>
+                </div>
+                
+                <p class="text-muted">
+                    {% if result.match_percentage > 70 %}
+                        Great job! Your resume matches well with this JD.
+                    {% elif result.match_percentage > 40 %}
+                        Good start, but you need to add more relevant keywords.
+                    {% else %}
+                        Low match. Consider rewriting your resume for this role.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">⚠️ Missing Keywords (Found in JD but not in Resume)</h5>
+            </div>
+            <div class="card-body">
+                <p>Try adding these words to your skills or experience section:</p>
+                <div>
+                    {% for word in result.missing_keywords %}
+                        <span class="badge bg-secondary fs-6 me-2 mb-2">{{ word }}</span>
+                    {% else %}
+                        <span class="text-success">Amazing! No major keywords missing.</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/analyzer" class="btn btn-primary">Analyze Another Resume</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
