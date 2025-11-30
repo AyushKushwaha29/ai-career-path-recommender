@@ -99,5 +99,70 @@ def analyze_result():
         
     # Run Analysis
     analysis = analyze_resume_vs_jd(resume_text, jd_text)
-    
     return render_template('analysis_result.html', result=analysis)
+
+
+# ... existing imports ...
+from .models import db, UserQuery, InterviewSession, ChatMessage # Added new models
+from .utils.ai_interviewer import get_ai_response # Import AI logic
+
+# ... existing routes (index, result, upload-resume, etc) ...
+
+# --- INTERVIEW ROUTES ---
+
+@main.route('/interview')
+def interview_setup():
+    return render_template('interview_setup.html')
+
+@main.route('/interview/start', methods=['POST'])
+def start_interview():
+    role = request.form.get('role')
+    level = request.form.get('level')
+    
+    # Create Session
+    new_session = InterviewSession(role=role, level=level)
+    db.session.add(new_session)
+    db.session.commit()
+    
+    # Initial AI Message
+    initial_msg = f"start interview for {role} {level}"
+    ai_text = get_ai_response(initial_msg, [], role, level)
+    
+    # Save AI Message
+    db_msg = ChatMessage(session_id=new_session.id, sender='AI', content=ai_text)
+    db.session.add(db_msg)
+    db.session.commit()
+    
+    return jsonify({'session_id': new_session.id, 'message': ai_text})
+
+@main.route('/interview/room/<int:session_id>')
+def interview_room(session_id):
+    session = db.session.get(InterviewSession, session_id)
+    if not session:
+        return "Session not found", 404
+    return render_template('interview_room.html', session=session)
+
+@main.route('/interview/chat', methods=['POST'])
+def chat_api():
+    data = request.json
+    session_id = data.get('session_id')
+    user_text = data.get('message')
+    
+    session = db.session.get(InterviewSession, session_id)
+    
+    # 1. Save User Message
+    user_msg_db = ChatMessage(session_id=session_id, sender='User', content=user_text)
+    db.session.add(user_msg_db)
+    
+    # 2. Get AI Response
+    # Fetch recent history for context (optional for simulation, needed for real AI)
+    history = ChatMessage.query.filter_by(session_id=session_id).order_by(ChatMessage.timestamp).all()
+    
+    ai_text = get_ai_response(user_text, history, session.role, session.level)
+    
+    # 3. Save AI Message
+    ai_msg_db = ChatMessage(session_id=session_id, sender='AI', content=ai_text)
+    db.session.add(ai_msg_db)
+    db.session.commit()
+    
+    return jsonify({'sender': 'AI', 'message': ai_text})

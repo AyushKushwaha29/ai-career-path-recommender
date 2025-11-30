@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center min-vh-75 align-items-center">
+    <div class="col-md-6">
+        <div class="glass-card p-5 text-center">
+            <h2 class="fw-bold mb-3">AI Mock Interviewer</h2>
+            <p class="mb-4">Select a role and difficulty to start practicing.</p>
+            
+            <form id="setupForm">
+                <select id="role" class="form-select mb-3" required>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="Backend Developer">Backend Developer</option>
+                    <option value="Frontend Developer">Frontend Developer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="HR">HR / Behavioral</option>
+                </select>
+                
+                <select id="level" class="form-select mb-4" required>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+                
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Start Interview 🎤</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('setupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const role = document.getElementById('role').value;
+    const level = document.getElementById('level').value;
+    
+    const formData = new FormData();
+    formData.append('role', role);
+    formData.append('level', level);
+
+    const res = await fetch('/interview/start', { method: 'POST', body: formData });
+    const data = await res.json();
+    
+    // Redirect to Chat Room
+    window.location.href = `/interview/room/${data.session_id}`;
+});
+</script>
+{% endblock %}
